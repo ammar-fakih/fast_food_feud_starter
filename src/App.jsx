@@ -40,7 +40,7 @@ export function App() {
   };
 
   const handleClose = (type) => {
-    console.log("close", type)
+    console.log('close', type);
     if (type === 'menu') {
       setSelectedMenuItem('');
     } else if (type === 'restaurant') {
@@ -48,7 +48,7 @@ export function App() {
     } else {
       setSelectedCategory('');
     }
-    console.log(selectedRestaurant)
+    console.log(selectedRestaurant);
   };
 
   const currentMenuItems = data.filter((item) => {
@@ -58,6 +58,18 @@ export function App() {
     );
   });
 
+  let currentInstructions = appInfo.instructions.start;
+  if (!selectedCategory && !selectedRestaurant && !selectedMenuItem) {
+    currentInstructions = appInfo.instructions.start;
+  } else if (selectedCategory && !selectedRestaurant) {
+    currentInstructions = appInfo.instructions.onlyCategory;
+  } else if (!selectedCategory && selectedRestaurant) {
+    currentInstructions = appInfo.instructions.onlyRestaurant;
+  } else if (selectedCategory && selectedRestaurant && !selectedMenuItem) {
+    currentInstructions = appInfo.instructions.noSelectedItem;
+  } else {
+    currentInstructions = appInfo.instructions.allSelected;
+  }
   return (
     <main className="App">
       {/* CATEGORIES COLUMN */}
@@ -108,14 +120,7 @@ export function App() {
         </div>
 
         {/* INSTRUCTIONS GO HERE */}
-        <Instructions
-          instructions={appInfo.instructions.start}
-          start={appInfo.instructions.start}
-          onlyCategory={appInfo.instructions.onlyCategory}
-          onlyRestaurant={appInfo.instructions.onlyRestaurant}
-          noSelectedItem={appInfo.instructions.noSelectedItem}
-          allSelected={appInfo.instructions.allSelected}
-        />
+        <Instructions instructions={currentInstructions} />
 
         {/* MENU DISPLAY */}
         <div className="MenuDisplay display">
