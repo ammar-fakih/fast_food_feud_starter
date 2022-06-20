@@ -39,6 +39,18 @@ export function App() {
     }
   };
 
+  const handleClose = (type) => {
+    console.log("close", type)
+    if (type === 'menu') {
+      setSelectedMenuItem('');
+    } else if (type === 'restaurant') {
+      setSelectedRestaurant('');
+    } else {
+      setSelectedCategory('');
+    }
+    console.log(selectedRestaurant)
+  };
+
   const currentMenuItems = data.filter((item) => {
     return (
       item.food_category === selectedCategory &&
@@ -56,6 +68,7 @@ export function App() {
             return (
               <Chip
                 type={'category'}
+                handleClose={handleClose}
                 handleClick={handleClick}
                 key={category}
                 label={category}
@@ -83,6 +96,7 @@ export function App() {
               return (
                 <Chip
                   type={'restaurant'}
+                  handleClose={handleClose}
                   handleClick={handleClick}
                   key={restaurant}
                   label={restaurant}
@@ -112,7 +126,9 @@ export function App() {
               return (
                 <Chip
                   label={item.item_name}
+                  key={item.item_name}
                   type="menu"
+                  handleClose={handleClose}
                   handleClick={handleClick}
                   isActive={selectedMenuItem === item.item_name}
                 />
@@ -123,6 +139,13 @@ export function App() {
           {/* NUTRITION FACTS */}
           <div className="NutritionFacts nutrition-facts">
             {/* YOUR CODE HERE */}
+            {selectedMenuItem ? (
+              <NutritionalLabel
+                item={data.find((item) => {
+                  return item.item_name === selectedMenuItem;
+                })}
+              />
+            ) : null}
           </div>
         </div>
 
