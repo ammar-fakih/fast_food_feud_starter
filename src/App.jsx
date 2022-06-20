@@ -4,6 +4,7 @@ import { createDataSet } from './data/dataset';
 import './App.css';
 import Header from './components/Header/Header';
 import Instructions from './components/Instructions/Instructions';
+import Chip from './components/Chip/Chip';
 
 // don't move this!
 export const appInfo = {
@@ -23,15 +24,16 @@ export const appInfo = {
 const { data, categories, restaurants } = createDataSet();
 
 export function App() {
+  console.log(categories);
+  console.log(restaurants);
   return (
     <main className="App">
       {/* CATEGORIES COLUMN */}
       <div className="CategoriesColumn col">
         <div className="categories options">
           <h2 className="title">Categories</h2>
-          {categories.map((category) => {
-            console.log(category);
-            return <p id={category}>{category}</p>;
+          {categories.map((category, i) => {
+            return <Chip key={category} label={category} isActive={category === "Burger"} />;
           })}
         </div>
       </div>
@@ -50,7 +52,13 @@ export function App() {
           <h2 className="title">Restaurants</h2>
           <div className="restaurants options">
             {restaurants.map((restaurant) => {
-              return <p id={restaurant}>{restaurant}</p>;
+              return (
+                <Chip
+                  key={restaurant}
+                  label={restaurant}
+                  isActive={restaurant === 'In-N-Out Burger'}
+                />
+              );
             })}
           </div>
         </div>
