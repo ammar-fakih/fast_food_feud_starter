@@ -1,7 +1,9 @@
-import * as React from "react"
+import * as React from 'react';
 // IMPORT ANY NEEDED COMPONENTS HERE
-import { createDataSet } from "./data/dataset"
-import "./App.css"
+import { createDataSet } from './data/dataset';
+import './App.css';
+import Header from './components/Header/Header';
+import Instructions from './components/Instructions/Instructions';
 
 // don't move this!
 export const appInfo = {
@@ -16,9 +18,9 @@ export const appInfo = {
     noSelectedItem: `Almost there! Choose a menu item and you'll have the fast food facts right at your fingertips!`,
     allSelected: `Great choice! Amazing what a little knowledge can do!`,
   },
-}
+};
 // or this!
-const { data, categories, restaurants } = createDataSet()
+const { data, categories, restaurants } = createDataSet();
 
 export function App() {
   return (
@@ -27,21 +29,41 @@ export function App() {
       <div className="CategoriesColumn col">
         <div className="categories options">
           <h2 className="title">Categories</h2>
-          {/* YOUR CODE HERE */}
+          {categories.map((category) => {
+            console.log(category);
+            return <p id={category}>{category}</p>;
+          })}
         </div>
       </div>
 
       {/* MAIN COLUMN */}
       <div className="container">
         {/* HEADER GOES HERE */}
+        <Header
+          title={appInfo.title}
+          tagline={appInfo.tagline}
+          description={appInfo.description}
+        />
 
         {/* RESTAURANTS ROW */}
         <div className="RestaurantsRow">
           <h2 className="title">Restaurants</h2>
-          <div className="restaurants options">{/* YOUR CODE HERE */}</div>
+          <div className="restaurants options">
+            {restaurants.map((restaurant) => {
+              return <p id={restaurant}>{restaurant}</p>;
+            })}
+          </div>
         </div>
 
         {/* INSTRUCTIONS GO HERE */}
+        <Instructions
+          instructions={appInfo.instructions.start}
+          start={appInfo.instructions.start}
+          onlyCategory={appInfo.instructions.onlyCategory}
+          onlyRestaurant={appInfo.instructions.onlyRestaurant}
+          noSelectedItem={appInfo.instructions.noSelectedItem}
+          allSelected={appInfo.instructions.allSelected}
+        />
 
         {/* MENU DISPLAY */}
         <div className="MenuDisplay display">
@@ -51,7 +73,9 @@ export function App() {
           </div>
 
           {/* NUTRITION FACTS */}
-          <div className="NutritionFacts nutrition-facts">{/* YOUR CODE HERE */}</div>
+          <div className="NutritionFacts nutrition-facts">
+            {/* YOUR CODE HERE */}
+          </div>
         </div>
 
         <div className="data-sources">
@@ -59,7 +83,7 @@ export function App() {
         </div>
       </div>
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
